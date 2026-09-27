@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CodeVault | Programação Avançada</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header><div class="logo">⚡ CodeVault</div><nav><a href="#inicio">Início</a><a href="#editor">Editor</a><a href="#projetos">Projetos</a><a href="#cripto">Criptografia</a></nav><button id="authBtn">Entrar</button></header>
+<main>
+<section id="inicio" class="hero"><div><span class="tag">PLATAFORMA WEB</span><h1>Crie. Proteja.<br><b>Programe.</b></h1><p>Ambiente para estudar programação, testar código e guardar seus projetos.</p><div class="actions"><a class="btn" href="#editor">Abrir editor</a><button class="btn ghost" id="heroAuth">Criar conta</button></div></div><div class="card stats"><strong id="status">Modo visitante</strong><p>Cadastro, login e projetos ficam salvos no servidor quando o banco estiver configurado.</p></div></section>
+
+<section id="editor" class="section"><h2>Editor HTML / CSS / JS</h2><div class="grid3"><label>HTML<textarea id="html"><h1>Olá, CodeVault!</h1><p>Meu primeiro projeto.</p></textarea></label><label>CSS<textarea id="css">body{font-family:Arial;padding:40px;background:#0b1220;color:white}h1{color:#7dd3fc}</textarea></label><label>JavaScript<textarea id="js">console.log("CodeVault funcionando!");</textarea></label></div><div class="actions"><button class="btn" id="run">Executar</button><button class="btn" id="save">Salvar projeto</button></div></section>
+
+<section id="projetos" class="section"><h2>Meus projetos</h2><div id="projects" class="cards"><p>Faça login para carregar seus projetos.</p></div></section>
+
+<section id="cripto" class="section"><h2>Laboratório de César</h2><div class="card"><textarea id="cipherIn" placeholder="Digite um texto"></textarea><input id="shift" type="number" value="3"><div class="actions"><button class="btn" id="enc">Criptografar</button><button class="btn ghost" id="dec">Descriptografar</button></div><textarea id="cipherOut" readonly placeholder="Resultado"></textarea></div></section>
+
+<section class="section"><div class="card"><h2>Conta</h2><p id="account">Visitante.</p><button class="btn" id="logout">Sair</button></div></section>
+</main>
+<div id="modal" class="modal hidden"><div class="modalbox"><button class="close" id="close">×</button><h2 id="modalTitle">Entrar</h2><input id="name" placeholder="Nome"><input id="email" type="email" placeholder="E-mail"><input id="password" type="password" placeholder="Senha (mín. 8 caracteres)"><button class="btn" id="submitAuth">Entrar</button><button class="link" id="toggleAuth">Criar conta</button><p id="msg"></p></div></div>
+<script src="/app.js"></script>
+</body></html>
