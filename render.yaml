@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: codevault
+    runtime: node
+    buildCommand: npm ci
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: codevault-db
+          property: connectionString
+      - key: ADMIN_EMAIL
+        sync: false
+databases:
+  - name: codevault-db
+    databaseName: codevault
+    user: codevault
