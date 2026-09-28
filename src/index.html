@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CodeVault - plataforma para organizar projetos e códigos">
+  <title>CodeVault</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #0b1020;
+      color: #f5f7ff;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #11182d;
+      border-bottom: 1px solid #263252;
+      padding: 16px 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-content {
+      max-width: 1150px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 21px;
+      font-weight: bold;
+    }
+
+    .logo-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #6c63ff, #00c2ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    nav {
+      display: flex;
+      gap: 10px;
+    }
+
+    nav button {
+      border: 0;
+      background: transparent;
+      color: #b8c1dc;
+      padding: 10px 14px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    nav button:hover,
+    nav button.active {
+      background: #202b4a;
+      color: white;
+    }
+
+    main {
+      max-width: 1150px;
+      margin: auto;
+      padding: 35px 20px 60px;
+    }
+
+    .hero {
+      background:
+        radial-gradient(circle at top right, rgba(0,194,255,.18), transparent 35%),
+        linear-gradient(135deg, #151e3b, #10162b);
+      border: 1px solid #293657;
+      border-radius: 22px;
+      padding: 45px 35px;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 {
+      font-size: clamp(32px, 6vw, 58px);
+      margin-bottom: 15px;
+    }
+
+    .hero h1 span {
+      color: #6c63ff;
+    }
+
+    .hero p {
+      color: #b7c0d9;
+      max-width: 650px;
+      line-height: 1.7;
+      font-size: 17px;
+    }
+
+    .buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 25px;
+    }
+
+    .btn {
+      border: 0;
+      border-radius: 10px;
+      padding: 13px 20px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    .btn-primary {
+      color: white;
+      background: linear-gradient(135deg, #6c63ff, #00aeea);
+    }
+
+    .btn-secondary {
+      color: white;
+      background: #202b4a;
+      border: 1px solid #354263;
+    }
+
+    .section {
+      margin-top: 30px;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 15px;
+      gap: 10px;
+    }
+
+    .section-title h2 {
+      font-size: 24px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+
+    .card {
+      background: #11182d;
+      border: 1px solid #293657;
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .card:hover {
+      border-color: #5d66ff;
+      transform: translateY(-2px);
+      transition: .2s;
+    }
+
+    .card-icon {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: #aab4d0;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .dashboard {
+      display: none;
+    }
+
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 20px;
+    }
+
+    .stat {
+      background: #11182d;
+      border: 1px solid #293657;
+      padding: 20px;
+      border-radius: 15px;
+    }
+
+    .stat small {
+      color: #929dbb;
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 27px;
+      margin-top: 8px;
+    }
+
+    .projects {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+
+    .project {
+      background: #11182d;
+      border: 1px solid #293657;
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .project-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+
+    .badge {
+      background: #193d3b;
+      color: #61e0b4;
+      padding: 5px 9px;
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    .project p {
+      color: #aab4d0;
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .login-box {
+      max-width: 500px;
+      margin: 30px auto;
+      background: #11182d;
+      border: 1px solid #293657;
+      padding: 30px;
+      border-radius: 18px;
+    }
+
+    .login-box h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 13px;
+      border-radius: 9px;
+      border: 1px solid #34405f;
+      background: #0b1020;
+      color: white;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #6c63ff;
+    }
+
+    .message {
+      margin-top: 15px;
+      color: #61e0b4;
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 20px;
+      color: #77819e;
+      border-top: 1px solid #202a46;
+    }
+
+    @media (max-width: 800px) {
+      .cards,
+      .dashboard-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .projects {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 550px) {
+      nav {
+        display: none;
+      }
+
+      .hero {
+        padding: 30px 22px;
+      }
+
+      .cards,
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header-content {
+        justify-content: center;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <div class="header-content">
+    <div class="logo">
+      <div class="logo-icon">&lt;/&gt;</div>
+      CodeVault
+    </div>
+
+    <nav>
+      <button class="active" onclick="mostrar('inicio', this)">Início</button>
+      <button onclick="mostrar('painel', this)">Painel</button>
+      <button onclick="mostrar('login', this)">Entrar</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+
+  <!-- INÍCIO -->
+  <section id="inicio">
+
+    <div class="hero">
+      <h1>Seu código.<br><span>Seu controle.</span></h1>
+
+      <p>
+        Organize seus projetos, acompanhe seu desenvolvimento
+        e tenha um espaço moderno para administrar seus códigos.
+      </p>
+
+      <div class="buttons">
+        <button class="btn btn-primary" onclick="mostrar('painel')">
+          Acessar painel
+        </button>
+
+        <button class="btn btn-secondary" onclick="mostrar('login')">
+          Criar acesso
+        </button>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-title">
+        <h2>Recursos</h2>
+      </div>
+
+      <div class="cards">
+
+        <div class="card">
+          <div class="card-icon">💻</div>
+          <h3>Projetos</h3>
+          <p>
+            Organize seus projetos e acompanhe o desenvolvimento
+            em um único lugar.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">🔐</div>
+          <h3>Controle</h3>
+          <p>
+            Área preparada para futuramente receber autenticação
+            e recursos administrativos.
+          </p>
+        </div>
+
+        <div class="card">
+          <div class="card-icon">📊</div>
+          <h3>Dashboard</h3>
+          <p>
+            Visualize informações importantes do sistema
+            através de um painel simples.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+  <!-- PAINEL -->
+  <section id="painel" class="dashboard">
+
+    <div class="section-title">
+      <h2>Painel do CodeVault</h2>
+
+      <button class="btn btn-primary" onclick="novoProjeto()">
+        + Novo projeto
+      </button>
+    </div>
+
+    <div class="dashboard-grid">
+
+      <div class="stat">
+        <small>Projetos</small>
+        <strong id="totalProjetos">3</strong>
+      </div>
+
+      <div class="stat">
+        <small>Projetos ativos</small>
+        <strong>2</strong>
+      </div>
+
+      <div class="stat">
+        <small>Arquivos</small>
+        <strong>27</strong>
+      </div>
+
+      <div class="stat">
+        <small>Status</small>
+        <strong>Online</strong>
+      </div>
+
+    </div>
+
+    <div class="projects" id="listaProjetos">
+
+      <div class="project">
+        <div class="project-top">
+          <h3>CodeVault</h3>
+          <span class="badge">Ativo</span>
+        </div>
+
+        <p>
+          Sistema principal do projeto CodeVault.
+        </p>
+      </div>
+
+      <div class="project">
+        <div class="project-top">
+          <h3>Website</h3>
+          <span class="badge">Ativo</span>
+        </div>
+
+        <p>
+          Interface pública do sistema.
+        </p>
+      </div>
+
+      <div class="project">
+        <div class="project-top">
+          <h3>Dashboard</h3>
+          <span class="badge">Em desenvolvimento</span>
+        </div>
+
+        <p>
+          Área administrativa e indicadores do sistema.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- LOGIN -->
+  <section id="login" style="display:none">
+
+    <div class="login-box">
+
+      <h2>Acesso ao CodeVault</h2>
+
+      <input
+        type="text"
+        id="nome"
+        placeholder="Seu nome"
+      >
+
+      <input
+        type="email"
+        id="email"
+        placeholder="Seu e-mail"
+      >
+
+      <input
+        type="password"
+        id="senha"
+        placeholder="Sua senha"
+      >
+
+      <button class="btn btn-primary" onclick="entrar()">
+        Entrar
+      </button>
+
+      <div id="mensagem" class="message">
+        Acesso demonstrativo realizado!
+      </div>
+
+    </div>
+
+  </section>
+
+</main>
+
+<footer>
+  © 2026 CodeVault — Sistema em desenvolvimento
+</footer>
+
+<script>
+
+  function esconderTudo() {
+    document.getElementById("inicio").style.display = "none";
+    document.getElementById("painel").style.display = "none";
+    document.getElementById("login").style.display = "none";
+  }
+
+  function mostrar(pagina, botao) {
+
+    esconderTudo();
+
+    if (pagina === "inicio") {
+      document.getElementById("inicio").style.display = "block";
+    }
+
+    if (pagina === "painel") {
+      document.getElementById("painel").style.display = "block";
+    }
+
+    if (pagina === "login") {
+      document.getElementById("login").style.display = "block";
+    }
+
+    document.querySelectorAll("nav button").forEach(function(btn) {
+      btn.classList.remove("active");
+    });
+
+    if (botao) {
+      botao.classList.add("active");
+    }
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+  function entrar() {
+
+    const nome = document.getElementById("nome").value;
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+    const mensagem = document.getElementById("mensagem");
+
+    if (!nome || !email || !senha) {
+      alert("Preencha todos os campos.");
+      return;
+    }
+
+    mensagem.style.display = "block";
+
+    setTimeout(function() {
+      mostrar("painel");
+    }, 800);
+  }
+
+  function novoProjeto() {
+
+    const nomeProjeto = prompt("Digite o nome do novo projeto:");
+
+    if (!nomeProjeto) {
+      return;
+    }
+
+    const lista = document.getElementById("listaProjetos");
+
+    const projeto = document.createElement("div");
+
+    projeto.className = "project";
+
+    projeto.innerHTML = `
+      <div class="project-top">
+        <h3>${nomeProjeto}</h3>
+        <span class="badge">Novo</span>
+      </div>
+
+      <p>
+        Projeto criado no CodeVault.
+      </p>
+    `;
+
+    lista.appendChild(projeto);
+
+    const total = document.getElementById("totalProjetos");
+
+    total.textContent =
+      parseInt(total.textContent) + 1;
+  }
+
+</script>
+
+</body>
+</html>
