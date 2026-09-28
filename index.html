@@ -1,23 +1,465 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>CodeVault | Programação Avançada</title>
-<link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CodeVault</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: #080d1a;
+      color: white;
+      min-height: 100vh;
+    }
+
+    header {
+      background: #10182d;
+      border-bottom: 1px solid #263354;
+      padding: 16px 20px;
+    }
+
+    .topo {
+      max-width: 1100px;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      font-size: 22px;
+      font-weight: bold;
+    }
+
+    .logo span {
+      color: #6c63ff;
+    }
+
+    nav button {
+      background: transparent;
+      border: 0;
+      color: #b9c2da;
+      padding: 10px;
+      cursor: pointer;
+      font-size: 15px;
+    }
+
+    nav button:hover {
+      color: white;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: auto;
+      padding: 30px 20px;
+    }
+
+    .pagina {
+      display: none;
+    }
+
+    .pagina.ativa {
+      display: block;
+    }
+
+    .hero {
+      padding: 50px 30px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, #151f3d, #11182c);
+      border: 1px solid #2b395e;
+      margin-bottom: 25px;
+    }
+
+    .hero h1 {
+      font-size: 45px;
+      margin-bottom: 15px;
+    }
+
+    .hero h1 span {
+      color: #6c63ff;
+    }
+
+    .hero p {
+      color: #b8c2dc;
+      line-height: 1.7;
+      max-width: 650px;
+      font-size: 17px;
+    }
+
+    .botoes {
+      margin-top: 25px;
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .botao {
+      border: 0;
+      padding: 13px 20px;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .principal {
+      background: linear-gradient(135deg, #6c63ff, #00b8ff);
+      color: white;
+    }
+
+    .secundario {
+      background: #202b49;
+      color: white;
+      border: 1px solid #344263;
+    }
+
+    .titulo {
+      margin: 30px 0 15px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+
+    .card {
+      background: #11182d;
+      border: 1px solid #293758;
+      border-radius: 16px;
+      padding: 22px;
+    }
+
+    .card h3 {
+      margin: 10px 0;
+    }
+
+    .card p {
+      color: #aab5d0;
+      line-height: 1.5;
+    }
+
+    .icone {
+      font-size: 30px;
+    }
+
+    .estatisticas {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 15px;
+      margin-bottom: 25px;
+    }
+
+    .estatistica {
+      background: #11182d;
+      border: 1px solid #293758;
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .estatistica small {
+      color: #8995b3;
+    }
+
+    .estatistica strong {
+      display: block;
+      font-size: 28px;
+      margin-top: 8px;
+    }
+
+    .projetos {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 15px;
+    }
+
+    .projeto {
+      background: #11182d;
+      border: 1px solid #293758;
+      border-radius: 15px;
+      padding: 20px;
+    }
+
+    .projeto p {
+      color: #aab5d0;
+      margin-top: 10px;
+    }
+
+    .status {
+      color: #5ee0b1;
+      font-size: 13px;
+      margin-top: 10px;
+      display: inline-block;
+    }
+
+    .login {
+      max-width: 500px;
+      margin: 30px auto;
+      background: #11182d;
+      border: 1px solid #293758;
+      border-radius: 18px;
+      padding: 30px;
+    }
+
+    .login h2 {
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 12px;
+      background: #080d1a;
+      border: 1px solid #344263;
+      border-radius: 9px;
+      color: white;
+      outline: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #7783a0;
+      border-top: 1px solid #202b45;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 750px) {
+      .cards,
+      .estatisticas,
+      .projetos {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      nav {
+        display: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
-<header><div class="logo">⚡ CodeVault</div><nav><a href="#inicio">Início</a><a href="#editor">Editor</a><a href="#projetos">Projetos</a><a href="#cripto">Criptografia</a></nav><button id="authBtn">Entrar</button></header>
+
+<header>
+  <div class="topo">
+    <div class="logo">⚡ Code<span>Vault</span></div>
+
+    <nav>
+      <button onclick="mostrar('inicio')">Início</button>
+      <button onclick="mostrar('painel')">Painel</button>
+      <button onclick="mostrar('login')">Entrar</button>
+    </nav>
+  </div>
+</header>
+
 <main>
-<section id="inicio" class="hero"><div><span class="tag">PLATAFORMA WEB</span><h1>Crie. Proteja.<br><b>Programe.</b></h1><p>Ambiente para estudar programação, testar código e guardar seus projetos.</p><div class="actions"><a class="btn" href="#editor">Abrir editor</a><button class="btn ghost" id="heroAuth">Criar conta</button></div></div><div class="card stats"><strong id="status">Modo visitante</strong><p>Cadastro, login e projetos ficam salvos no servidor quando o banco estiver configurado.</p></div></section>
 
-<section id="editor" class="section"><h2>Editor HTML / CSS / JS</h2><div class="grid3"><label>HTML<textarea id="html"><h1>Olá, CodeVault!</h1><p>Meu primeiro projeto.</p></textarea></label><label>CSS<textarea id="css">body{font-family:Arial;padding:40px;background:#0b1220;color:white}h1{color:#7dd3fc}</textarea></label><label>JavaScript<textarea id="js">console.log("CodeVault funcionando!");</textarea></label></div><div class="actions"><button class="btn" id="run">Executar</button><button class="btn" id="save">Salvar projeto</button></div></section>
+  <section id="inicio" class="pagina ativa">
 
-<section id="projetos" class="section"><h2>Meus projetos</h2><div id="projects" class="cards"><p>Faça login para carregar seus projetos.</p></div></section>
+    <div class="hero">
 
-<section id="cripto" class="section"><h2>Laboratório de César</h2><div class="card"><textarea id="cipherIn" placeholder="Digite um texto"></textarea><input id="shift" type="number" value="3"><div class="actions"><button class="btn" id="enc">Criptografar</button><button class="btn ghost" id="dec">Descriptografar</button></div><textarea id="cipherOut" readonly placeholder="Resultado"></textarea></div></section>
+      <h1>
+        Seu código.<br>
+        <span>Seu controle.</span>
+      </h1>
 
-<section class="section"><div class="card"><h2>Conta</h2><p id="account">Visitante.</p><button class="btn" id="logout">Sair</button></div></section>
+      <p>
+        Bem-vindo ao CodeVault, uma plataforma moderna
+        para organizar projetos, códigos e informações
+        em um único lugar.
+      </p>
+
+      <div class="botoes">
+
+        <button
+          class="botao principal"
+          onclick="mostrar('painel')">
+          Acessar painel
+        </button>
+
+        <button
+          class="botao secundario"
+          onclick="mostrar('login')">
+          Criar acesso
+        </button>
+
+      </div>
+    </div>
+
+    <h2 class="titulo">Recursos</h2>
+
+    <div class="cards">
+
+      <div class="card">
+        <div class="icone">💻</div>
+        <h3>Projetos</h3>
+        <p>
+          Organize seus projetos e acompanhe
+          o desenvolvimento.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icone">🔐</div>
+        <h3>Segurança</h3>
+        <p>
+          Estrutura preparada para receber
+          autenticação e recursos seguros.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="icone">📊</div>
+        <h3>Dashboard</h3>
+        <p>
+          Acompanhe informações importantes
+          através de um painel moderno.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="painel" class="pagina">
+
+    <h2 class="titulo">Painel do CodeVault</h2>
+
+    <div class="estatisticas">
+
+      <div class="estatistica">
+        <small>Projetos</small>
+        <strong>3</strong>
+      </div>
+
+      <div class="estatistica">
+        <small>Ativos</small>
+        <strong>2</strong>
+      </div>
+
+      <div class="estatistica">
+        <small>Arquivos</small>
+        <strong>27</strong>
+      </div>
+
+      <div class="estatistica">
+        <small>Status</small>
+        <strong>Online</strong>
+      </div>
+
+    </div>
+
+    <div class="projetos">
+
+      <div class="projeto">
+        <h3>CodeVault</h3>
+        <p>Sistema principal da plataforma.</p>
+        <span class="status">● Ativo</span>
+      </div>
+
+      <div class="projeto">
+        <h3>Website</h3>
+        <p>Página pública do projeto.</p>
+        <span class="status">● Ativo</span>
+      </div>
+
+      <div class="projeto">
+        <h3>Dashboard</h3>
+        <p>Área administrativa do sistema.</p>
+        <span class="status">● Em desenvolvimento</span>
+      </div>
+
+      <div class="projeto">
+        <h3>Banco de dados</h3>
+        <p>Estrutura preparada para futura integração.</p>
+        <span class="status">● Planejado</span>
+      </div>
+
+    </div>
+
+  </section>
+
+  <section id="login" class="pagina">
+
+    <div class="login">
+
+      <h2>Entrar no CodeVault</h2>
+
+      <input id="nome" type="text" placeholder="Seu nome">
+
+      <input id="email" type="email" placeholder="Seu e-mail">
+
+      <input id="senha" type="password" placeholder="Sua senha">
+
+      <button
+        class="botao principal"
+        onclick="entrar()">
+        Entrar
+      </button>
+
+    </div>
+
+  </section>
+
 </main>
-<div id="modal" class="modal hidden"><div class="modalbox"><button class="close" id="close">×</button><h2 id="modalTitle">Entrar</h2><input id="name" placeholder="Nome"><input id="email" type="email" placeholder="E-mail"><input id="password" type="password" placeholder="Senha (mín. 8 caracteres)"><button class="btn" id="submitAuth">Entrar</button><button class="link" id="toggleAuth">Criar conta</button><p id="msg"></p></div></div>
-<script src="/app.js"></script>
-</body></html>
+
+<footer>
+  © 2026 CodeVault — Plataforma em desenvolvimento
+</footer>
+
+<script>
+
+  function mostrar(pagina) {
+
+    document.querySelectorAll(".pagina")
+      .forEach(function(secao) {
+        secao.classList.remove("ativa");
+      });
+
+    document
+      .getElementById(pagina)
+      .classList.add("ativa");
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
+  }
+
+  function entrar() {
+
+    const nome =
+      document.getElementById("nome").value;
+
+    const email =
+      document.getElementById("email").value;
+
+    const senha =
+      document.getElementById("senha").value;
+
+    if (!nome || !email || !senha) {
+
+      alert("Preencha todos os campos.");
+
+      return;
+    }
+
+    alert("Acesso demonstrativo realizado!");
+
+    mostrar("painel");
+  }
+
+</script>
+
+</body>
+  </html>
